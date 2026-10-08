@@ -1,0 +1,41 @@
+server:
+  port: 8007
+
+spring:
+  application:
+    name: strider-analysis
+  profiles:
+    include: secret
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/strider?currentSchema=analysis}
+    username: ${DB_USERNAME:strider}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    show-sql: false
+    database: postgresql
+    hibernate:
+      ddl-auto: update
+  redis:
+    host: ${REDIS_HOST:redis}
+    port: 6379
+  data:
+    redis:
+      repositories:
+        enabled: false
+
+openrouter:
+  base-url: https://openrouter.ai/api/v1
+  model: openai/gpt-oss-120b:free
+  fallback-models: deepseek/deepseek-v4-flash:free,google/gemma-4-31b-it:free,nvidia/nemotron-3-super-120b-a12b:free
+  timeout-seconds: 30
+
+logging:
+  level:
+    root: INFO
+    com.strider: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %logger{36} - %msg%n"
+
+services:
+  gateway:
+    base-url: http://strider-gateway:8000

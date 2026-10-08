@@ -1,0 +1,2 @@
+rootProject.name = 'strider-analysis'
+include ':strider-common-lib'
